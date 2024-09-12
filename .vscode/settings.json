@@ -1,0 +1,19 @@
+{
+    "files.associations": {
+        "palloc.h": "c",
+        "thread.h": "c",
+        "random.h": "c",
+        "debug.h": "c",
+        "process.h": "c",
+        "frame.h": "c",
+        "tss.h": "c",
+        "flags.h": "c",
+        "bitmap.h": "c",
+        "pagedir.h": "c",
+        "file.h": "c",
+        "filesys.h": "c",
+        "off_t.h": "c",
+        "page.h": "c",
+        "buffer_cache.h": "c"
+    }
+}

@@ -1,0 +1,20 @@
+{
+	"name": "pintos",
+        "build": { "dockerfile": "Dockerfile" },
+        "runArgs": [
+          "--platform=linux/amd64"
+        ],
+	"workspaceMount": "source=${localWorkspaceFolder},target=/pintos,type=bind,consistency=cached",
+	"workspaceFolder": "/pintos",
+	"customizations": {
+    "vscode": {
+      "settings": {
+        "extensions.verifySignature": false
+      },
+      "extensions": [
+        "ms-vscode.cpptools",
+        "yzhang.markdown-all-in-one"
+      ]
+    }
+  }
+}

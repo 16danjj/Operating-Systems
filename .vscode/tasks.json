@@ -1,0 +1,1319 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "[P1] compile",
+      "type": "shell",
+      "command": "make",
+      "options": {
+        "cwd": "${workspaceFolder}/src/threads"
+      },
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "[P1] clean",
+      "type": "shell",
+      "command": "make clean",
+      "options": {
+        "cwd": "${workspaceFolder}/src/threads"
+      },
+      "problemMatcher": [],
+    },
+    {
+      "label": "[P1] Run all Tests",
+      "type": "shell",
+      "isBackground": true,
+      "problemMatcher": [
+        {
+          "pattern": [
+            {
+              "regexp": ".",
+              "file": 1,
+              "location": 2,
+              "message": 3
+            }
+          ],
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": ".",
+            "endsPattern": "."
+          }
+        }
+      ],
+      "dependsOn": [
+        "[P1] compile"
+      ],
+      "command": "make check",
+      "options": {
+        "cwd": "${workspaceFolder}/src/threads/"
+      },
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "[P1] Run Test",
+      "type": "shell",
+      "problemMatcher": [
+        {
+          "pattern": [
+            {
+              "regexp": ".",
+              "file": 1,
+              "location": 2,
+              "message": 3
+            }
+          ]
+        }
+      ],
+      "dependsOn": [
+        "[P1] compile"
+      ],
+      "command": "pintos -v -k -T 60 -- -q  run ${input:p1_test_name}",
+      "options": {
+        "cwd": "${workspaceFolder}/src/threads/build"
+      }
+    },
+    {
+      "label": "[P1] Run Test in Debug mode",
+      "type": "shell",
+      "isBackground": true,
+      "problemMatcher": [
+        {
+          "pattern": [
+            {
+              "regexp": ".",
+              "file": 1,
+              "location": 2,
+              "message": 3
+            }
+          ],
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": ".",
+            "endsPattern": "."
+          }
+        }
+      ],
+      "dependsOn": [
+        "[P1] compile"
+      ],
+      "command": "pintos -v -k -T 60 --gdb  -- -q  run ${input:p1_test_name}",
+      "options": {
+        "cwd": "${workspaceFolder}/src/threads/build"
+      }
+    },
+    {
+      "label": "[P2] compile",
+      "type": "shell",
+      "command": "make",
+      "options": {
+        "cwd": "${workspaceFolder}/src/userprog"
+      },
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "[P2] clean",
+      "type": "shell",
+      "command": "make clean",
+      "options": {
+        "cwd": "${workspaceFolder}/src/userprog"
+      },
+      "problemMatcher": [],
+    },
+    {
+      "label": "[P2] Make filesystem",
+      "type": "shell",
+      "command": "rm filesys.dsk; pintos-mkdisk filesys.dsk --filesys-size=2; pintos -f -q",
+      "options": {
+        "cwd": "${workspaceFolder}/src/userprog/build"
+      },
+      "problemMatcher": [],
+    },
+    {
+      "label": "[P2] Run all Tests",
+      "type": "shell",
+      "isBackground": true,
+      "problemMatcher": [
+        {
+          "pattern": [
+            {
+              "regexp": ".",
+              "file": 1,
+              "location": 2,
+              "message": 3
+            }
+          ],
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": ".",
+            "endsPattern": "."
+          }
+        }
+      ],
+      "dependsOn": [
+        "[P2] compile"
+      ],
+      "command": "make check",
+      "options": {
+        "cwd": "${workspaceFolder}/src/userprog/"
+      },
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "[P2] Run Test",
+      "type": "shell",
+      "problemMatcher": [
+        {
+          "pattern": [
+            {
+              "regexp": ".",
+              "file": 1,
+              "location": 2,
+              "message": 3
+            }
+          ]
+        }
+      ],
+      "dependsOn": [
+        "[P2] compile",
+        "[P2] Make filesystem",
+      ],
+      "command": "python3",
+      "args": [
+        "run_task.py",
+        "${workspaceFolder}",
+        "userprog",
+        "${input:p2_test_name}",
+        "0"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/.vscode"
+      }
+    },
+    {
+      "label": "[P2] Run Test in Debug mode",
+      "type": "shell",
+      "isBackground": true,
+      "problemMatcher": [
+        {
+          "pattern": [
+            {
+              "regexp": ".",
+              "file": 1,
+              "location": 2,
+              "message": 3
+            }
+          ],
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": ".",
+            "endsPattern": "."
+          }
+        }
+      ],
+      "dependsOn": [
+        "[P2] compile",
+        "[P2] Make filesystem",
+      ],
+      "command": "python3",
+      "args": [
+        "run_task.py",
+        "${workspaceFolder}",
+        "userprog",
+        "${input:p2_test_name}",
+        "1"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/.vscode"
+      }
+    },
+    {
+      "label": "[P3] compile",
+      "type": "shell",
+      "command": "make",
+      "options": {
+        "cwd": "${workspaceFolder}/src/vm"
+      },
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "[P3] clean",
+      "type": "shell",
+      "command": "make clean",
+      "options": {
+        "cwd": "${workspaceFolder}/src/vm"
+      },
+      "problemMatcher": [],
+    },
+    {
+      "label": "[P3] Make filesystem",
+      "type": "shell",
+      "command": "rm filesys.dsk; pintos-mkdisk filesys.dsk --filesys-size=2; pintos -f -q",
+      "options": {
+        "cwd": "${workspaceFolder}/src/vm/build"
+      },
+      "problemMatcher": [],
+    },
+    {
+      "label": "[P4] Make filesystem",
+      "type": "shell",
+      "command": "rm filesys.dsk; pintos-mkdisk filesys.dsk --filesys-size=2; pintos -f -q",
+      "options": {
+        "cwd": "${workspaceFolder}/src/filesys/build"
+      },
+      "problemMatcher": [],
+    },
+    {
+      "label": "[P3] Run all Tests",
+      "type": "shell",
+      "isBackground": true,
+      "problemMatcher": [
+        {
+          "pattern": [
+            {
+              "regexp": ".",
+              "file": 1,
+              "location": 2,
+              "message": 3
+            }
+          ],
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": ".",
+            "endsPattern": "."
+          }
+        }
+      ],
+      "dependsOn": [
+        "[P3] compile"
+      ],
+      "command": "make check",
+      "options": {
+        "cwd": "${workspaceFolder}/src/vm/"
+      },
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "[P3] Run Test",
+      "type": "shell",
+      "problemMatcher": [
+        {
+          "pattern": [
+            {
+              "regexp": ".",
+              "file": 1,
+              "location": 2,
+              "message": 3
+            }
+          ]
+        }
+      ],
+      "dependsOn": [
+        "[P3] compile",
+        "[P3] Make filesystem",
+      ],
+      "command": "python3",
+      "args": [
+        "run_task.py",
+        "${workspaceFolder}",
+        "vm",
+        "${input:p3_test_name}",
+        "0"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/.vscode"
+      }
+    },
+    {
+      "label": "[P3] Run Test in Debug mode",
+      "type": "shell",
+      "isBackground": true,
+      "problemMatcher": [
+        {
+          "pattern": [
+            {
+              "regexp": ".",
+              "file": 1,
+              "location": 2,
+              "message": 3
+            }
+          ],
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": ".",
+            "endsPattern": "."
+          }
+        }
+      ],
+      "dependsOn": [
+        "[P3] compile",
+        "[P3] Make filesystem",
+      ],
+      "command": "python3",
+      "args": [
+        "run_task.py",
+        "${workspaceFolder}",
+        "vm",
+        "${input:p3_test_name}",
+        "1"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/.vscode"
+      }
+    },
+    {
+      "label": "[P4] Run Test in Debug mode",
+      "type": "shell",
+      "isBackground": true,
+      "problemMatcher": [
+        {
+          "pattern": [
+            {
+              "regexp": ".",
+              "file": 1,
+              "location": 2,
+              "message": 3
+            }
+          ],
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": ".",
+            "endsPattern": "."
+          }
+        }
+      ],
+      "dependsOn": [
+        "[P4] compile",
+        "[P4] Make filesystem",
+      ],
+      "command": "python3",
+      "args": [
+        "run_task.py",
+        "${workspaceFolder}",
+        "filesys",
+        "${input:p4_test_name}",
+        "1"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/.vscode"
+      }
+    },
+    {
+      "label": "[P1] compile",
+      "type": "shell",
+      "command": "make",
+      "options": {
+          "cwd": "${workspaceFolder}/src/threads"
+      }
+  },
+  {
+      "label": "[P2] compile",
+      "type": "shell",
+      "command": "make",
+      "options": {
+          "cwd": "${workspaceFolder}/src/userprog"
+      }
+  },
+  {
+      "label": "[P1] Run Test in GDB mode",
+      "type": "shell",
+      "isBackground": true,
+      "problemMatcher": [
+          {
+              "pattern": [
+                  {
+                      "regexp": ".",
+                      "file": 1,
+                      "location": 2,
+                      "message": 3
+                  }
+              ],
+              "background": {
+                  "activeOnStart": true,
+                  "beginsPattern": ".",
+                  "endsPattern": ".",
+              }
+          }
+      ],
+      "dependsOn": [
+          "[P1] compile"
+      ],
+      "command": "pintos -v -k -T 60 --bochs --gdb  -- -q  run ${input:test_name}",
+      "options": {
+          "cwd": "${workspaceFolder}/src/threads/build"
+      }
+  },
+  {
+      "label": "[P2] Run Test in GDB mode",
+      "type": "shell",
+      "isBackground": true,
+      "problemMatcher": [
+          {
+              "pattern": [
+                  {
+                      "regexp": ".",
+                      "file": 1,
+                      "location": 2,
+                      "message": 3
+                  }
+              ],
+              "background": {
+                  "activeOnStart": true,
+                  "beginsPattern": ".",
+                  "endsPattern": ".",
+              }
+          }
+      ],
+      "dependsOn": [
+          "[P2] compile"
+      ],
+      "command": "pintos -v -k -T 60 --qemu --gdb --filesys-size=2 -p tests/userprog/${input:prog_name} -a ${input:prog_name} -- -q  -f run '${input:args}'",
+      "options": {
+          "cwd": "${workspaceFolder}/src/userprog/build"
+      }
+  },
+  {
+    "label": "[P2] Run Test in GDB mode",
+    "type": "shell",
+    "isBackground": true,
+    "problemMatcher": [
+        {
+            "pattern": [
+                {
+                    "regexp": ".",
+                    "file": 1,
+                    "location": 2,
+                    "message": 3
+                }
+            ],
+            "background": {
+                "activeOnStart": true,
+                "beginsPattern": ".",
+                "endsPattern": ".",
+            }
+        }
+    ],
+    "dependsOn": [
+        "[P2] compile"
+    ],
+    "command": "pintos -v -k -T 60 --qemu --gdb --filesys-size=2 -p tests/userprog/rox-child -a rox-child  -p tests/userprog/child-rox  -a child-rox -- -q  -f run rox-child",
+    "options": {
+        "cwd": "${workspaceFolder}/src/userprog/build"
+    }
+},
+  {
+      "label": "[P3] compile",
+      "type": "shell",
+      "command": "make",
+      "options": {
+          "cwd": "${workspaceFolder}/src/vm"
+      }
+  },
+  {
+      "label": "[P4] compile",
+      "type": "shell",
+      "command": "make",
+      "options": {
+          "cwd": "${workspaceFolder}/src/filesys"
+      }
+  },
+  {
+      "label": "[P2] Run exec-arg",
+      "type": "shell",
+      "isBackground": true,
+      "problemMatcher": [
+          {
+              "pattern": [
+                  {
+                      "regexp": ".",
+                      "file": 1,
+                      "location": 2,
+                      "message": 3
+                  }
+              ],
+              "background": {
+                  "activeOnStart": true,
+                  "beginsPattern": ".",
+                  "endsPattern": ".",
+              }
+          }
+      ],
+      "dependsOn": [
+          "[P2] compile"
+      ],
+      "command": "pintos -v -k -T 60 --gdb   --filesys-size=2 -p tests/userprog/exec-arg -a exec-arg -p tests/userprog/child-args -a child-args -- -q  -f run exec-arg",
+      "options": {
+          "cwd": "${workspaceFolder}/src/userprog/build"
+      }
+  },
+  {
+    "label": "[P2] compile2",
+    "type": "shell",
+    "command": "make",
+    "options": {
+      "cwd": "${workspaceFolder}/src/userprog"
+    },
+    "group": {
+      "kind": "build",
+      "isDefault": true
+    }
+  },
+  {
+    "label": "[P2] Run echo",
+    "type": "shell",
+    "isBackground": true,
+    "problemMatcher": [
+        {
+            "pattern": [
+                {
+                    "regexp": ".",
+                    "file": 1,
+                    "location": 2,
+                    "message": 3
+                }
+            ],
+            "background": {
+                "activeOnStart": true,
+                "beginsPattern": ".",
+                "endsPattern": ".",
+            }
+        }
+    ],
+    "dependsOn": [
+        "[P2] compile2"
+    ],
+    "command": "pintos -v -k -T 60 --gdb --filesys-size=2 -p ../../examples/echo -a echo -- -f -q run 'echo x'",
+    "options": {
+        "cwd": "${workspaceFolder}/src/userprog/build"
+    }
+  },
+  {
+    "label": "[P2] Run read-zero",
+    "type": "shell",
+    "isBackground": true,
+    "problemMatcher": [
+        {
+            "pattern": [
+                {
+                    "regexp": ".",
+                    "file": 1,
+                    "location": 2,
+                    "message": 3
+                }
+            ],
+            "background": {
+                "activeOnStart": true,
+                "beginsPattern": ".",
+                "endsPattern": ".",
+            }
+        }
+    ],
+    "dependsOn": [
+        "[P2] compile2"
+    ],
+    "command": "pintos -v -k -T 60 --gdb --filesys-size=2 -p tests/userprog/read-zero -a read-zero -p ../../tests/userprog/sample.txt -a sample.txt -- -f -q run read-zero",
+    "options": {
+        "cwd": "${workspaceFolder}/src/userprog/build"
+    }
+  },
+  {
+    "label": "[P2] Run ls",
+    "type": "shell",
+    "isBackground": true,
+    "problemMatcher": [
+        {
+            "pattern": [
+                {
+                    "regexp": ".",
+                    "file": 1,
+                    "location": 2,
+                    "message": 3
+                }
+            ],
+            "background": {
+                "activeOnStart": true,
+                "beginsPattern": ".",
+                "endsPattern": ".",
+            }
+        }
+    ],
+    "dependsOn": [
+        "[P2] compile2"
+    ],
+    "command": "pintos -v -k -T 60 --gdb --filesys-size=2 -p ../../examples/ls -a /bin/ls -- -f -q run '/bin/ls -l foo bar'",
+    "options": {
+        "cwd": "${workspaceFolder}/src/userprog/build"
+    }
+  },
+  {
+      "label": "[P2] Run syn-read",
+      "type": "shell",
+      "isBackground": true,
+      "problemMatcher": [
+          {
+              "pattern": [
+                  {
+                      "regexp": ".",
+                      "file": 1,
+                      "location": 2,
+                      "message": 3
+                  }
+              ],
+              "background": {
+                  "activeOnStart": true,
+                  "beginsPattern": ".",
+                  "endsPattern": ".",
+              }
+          }
+      ],
+      "dependsOn": [
+          "[P4] compile"
+      ],
+      "command": "pintos -v -k -T 300 --gdb --filesys-size=2 -p tests/filesys/base/syn-read -a syn-read -p tests/filesys/base/child-syn-read -a child-syn-read -- -q  -f run syn-read",
+      "options": {
+          "cwd": "${workspaceFolder}/src/filesys/build"
+      }
+  },
+  {
+    "label": "[P2] Run multi-oom",
+    "type": "shell",
+    "isBackground": true,
+    "problemMatcher": [
+        {
+            "pattern": [
+                {
+                    "regexp": ".",
+                    "file": 1,
+                    "location": 2,
+                    "message": 3
+                }
+            ],
+            "background": {
+                "activeOnStart": true,
+                "beginsPattern": ".",
+                "endsPattern": ".",
+            }
+        }
+    ],
+    "dependsOn": [
+        "[P2] compile"
+    ],
+    "command": "pintos -v -k -T 360 --gdb --filesys-size=2 -p tests/userprog/no-vm/multi-oom -a multi-oom -- -q  -f run multi-oom",
+    "options": {
+        "cwd": "${workspaceFolder}/src/userprog/build"
+    }
+},
+  {
+      "label": "[P3] Run child-linear",
+      "type": "shell",
+      "isBackground": true,
+      "problemMatcher": [
+          {
+              "pattern": [
+                  {
+                      "regexp": ".",
+                      "file": 1,
+                      "location": 2,
+                      "message": 3
+                  }
+              ],
+              "background": {
+                  "activeOnStart": true,
+                  "beginsPattern": ".",
+                  "endsPattern": ".",
+              }
+          }
+      ],
+      "dependsOn": [
+          "[P3] compile"
+      ],
+      "command": "pintos -v -k -T 60 --gdb --filesys-size=2 -p tests/vm/page-parallel -a page-parallel -p tests/vm/child-linear -a child-linear --swap-size=4 -- -q  -f run page-parallel",
+      "options": {
+          "cwd": "${workspaceFolder}/src/vm/build"
+      }
+  },
+  {
+      "label": "[P3] Run page-linear",
+      "type": "shell",
+      "isBackground": true,
+      "problemMatcher": [
+          {
+              "pattern": [
+                  {
+                      "regexp": ".",
+                      "file": 1,
+                      "location": 2,
+                      "message": 3
+                  }
+              ],
+              "background": {
+                  "activeOnStart": true,
+                  "beginsPattern": ".",
+                  "endsPattern": ".",
+              }
+          }
+      ],
+      "dependsOn": [
+          "[P3] compile"
+      ],
+      "command": "pintos -v -k -T 60 --gdb --filesys-size=2 -p tests/vm/page-linear -a page-linear -- -q  -f run page-linear",
+      "options": {
+          "cwd": "${workspaceFolder}/src/vm/build"
+      }
+  },
+  {
+    "label": "[P4] Run tar",
+    "type": "shell",
+    "isBackground": true,
+    "problemMatcher": [
+        {
+            "pattern": [
+                {
+                    "regexp": ".",
+                    "file": 1,
+                    "location": 2,
+                    "message": 3
+                }
+            ],
+            "background": {
+                "activeOnStart": true,
+                "beginsPattern": ".",
+                "endsPattern": ".",
+            }
+        }
+    ],
+    "dependsOn": [
+        "[P4] compile"
+    ],
+    "command": "pintos -v -k -T 60 --gdb --filesys-size=2 -p tests/filesys/extended/tar -a tar  -- -q -f run 'tar fs.tar /' append fs.tar",
+    "options": {
+        "cwd": "${workspaceFolder}/src/filesys/build"
+    }
+    },
+    {
+      "label": "[P4] compile",
+      "type": "shell",
+      "command": "make",
+      "options": {
+        "cwd": "${workspaceFolder}/src/filesys"
+      },
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "[P4] clean",
+      "type": "shell",
+      "command": "make clean",
+      "options": {
+        "cwd": "${workspaceFolder}/src/filesys"
+      },
+      "problemMatcher": [],
+    },
+    {
+      "label": "[P4] Make filesystem",
+      "type": "shell",
+      "command": "rm filesys.dsk; pintos-mkdisk filesys.dsk --filesys-size=2; pintos -f -q",
+      "options": {
+        "cwd": "${workspaceFolder}/src/filesys/build"
+      },
+      "problemMatcher": [],
+    },
+    {
+      "label": "[P4] Run all Tests",
+      "type": "shell",
+      "isBackground": true,
+      "problemMatcher": [
+        {
+          "pattern": [
+            {
+              "regexp": ".",
+              "file": 1,
+              "location": 2,
+              "message": 3
+            }
+          ],
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": ".",
+            "endsPattern": "."
+          }
+        }
+      ],
+      "dependsOn": [
+        "[P4] compile"
+      ],
+      "command": "make check",
+      "options": {
+        "cwd": "${workspaceFolder}/src/filesys/"
+      },
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "[P4] Run Test",
+      "type": "shell",
+      "problemMatcher": [
+        {
+          "pattern": [
+            {
+              "regexp": ".",
+              "file": 1,
+              "location": 2,
+              "message": 3
+            }
+          ]
+        }
+      ],
+      "dependsOn": [
+        "[P4] compile",
+        "[P4] Make filesystem",
+      ],
+      "command": "python3",
+      "args": [
+        "run_task.py",
+        "${workspaceFolder}",
+        "filesys",
+        "${input:p4_test_name}",
+        "0"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/.vscode"
+      }
+    },
+    {
+      "label": "[P4] Run Test in Debug mode",
+      "type": "shell",
+      "isBackground": true,
+      "problemMatcher": [
+        {
+          "pattern": [
+            {
+              "regexp": ".",
+              "file": 1,
+              "location": 2,
+              "message": 3
+            }
+          ],
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": ".",
+            "endsPattern": "."
+          }
+        }
+      ],
+      "dependsOn": [
+        "[P4] compile",
+        "[P4] Make filesystem",
+      ],
+      "command": "python3",
+      "args": [
+        "run_task.py",
+        "${workspaceFolder}",
+        "filesys",
+        "${input:p4_test_name}",
+        "1"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/.vscode"
+      }
+    }, 
+    {
+      "label": "[P4] Run special test",
+      "type": "shell",
+      "isBackground": true,
+      "problemMatcher": [
+          {
+              "pattern": [
+                  {
+                      "regexp": ".",
+                      "file": 1,
+                      "location": 2,
+                      "message": 3
+                  }
+              ],
+              "background": {
+                  "activeOnStart": true,
+                  "beginsPattern": ".",
+                  "endsPattern": ".",
+              }
+          }
+      ],
+      "dependsOn": [
+          "[P4] compile"
+      ],
+      "command": "pintos -v -k -T 300 --gdb --filesys-size=2 -p tests/vm/pt-write-code2 -a pt-write-code2 -p ../../tests/userprog/sample.txt -a sample.txt -- -q  -f run pt-write-code2",
+      "options": {
+          "cwd": "${workspaceFolder}/src/filesys/build"
+      }
+    }
+  ],
+  "inputs": [
+      {
+          "id": "p1_test_name",
+          "type": "pickString",
+          "description": "Name of the P1 Test to Debug",
+          "options": [
+              "alarm-single",
+              "alarm-multiple",
+              "alarm-simultaneous",
+              "alarm-priority",
+              "alarm-zero",
+              "alarm-negative",
+              "procon-small-buffer",
+              "procon-multiple",
+              "procon-multiple2",
+              "procon-full",
+              "priority-change",
+              "priority-preempt",
+              "priority-fifo",
+              "priority-sema",
+              "priority-condvar",
+              "priority-donate-one",
+              "priority-donate-multiple",
+              "priority-donate-multiple2",
+              "priority-donate-nest",
+              "priority-donate-chain",
+              "priority-donate-sema",
+              "priority-donate-lower"
+          ]
+      },
+      {
+        "id": "p2_test_name",
+        "type": "pickString",
+        "description": "Name of the P2 Test to Debug",
+        "options": [
+          "tests/userprog/args-none",
+          "tests/userprog/args-single",
+          "tests/userprog/args-multiple",
+          "tests/userprog/args-many",
+          "tests/userprog/args-dbl-space",
+          "tests/userprog/sc-bad-sp",
+          "tests/userprog/sc-bad-arg",
+          "tests/userprog/sc-boundary",
+          "tests/userprog/sc-boundary-2",
+          "tests/userprog/sc-boundary-3",
+          "tests/userprog/halt",
+          "tests/userprog/exit",
+          "tests/userprog/create-normal",
+          "tests/userprog/create-empty",
+          "tests/userprog/create-null",
+          "tests/userprog/create-bad-ptr",
+          "tests/userprog/create-long",
+          "tests/userprog/create-exists",
+          "tests/userprog/create-bound",
+          "tests/userprog/open-normal",
+          "tests/userprog/open-missing",
+          "tests/userprog/open-boundary",
+          "tests/userprog/open-empty",
+          "tests/userprog/open-null",
+          "tests/userprog/open-bad-ptr",
+          "tests/userprog/open-twice",
+          "tests/userprog/close-normal",
+          "tests/userprog/close-twice",
+          "tests/userprog/close-stdin",
+          "tests/userprog/close-stdout",
+          "tests/userprog/close-bad-fd",
+          "tests/userprog/read-normal",
+          "tests/userprog/read-bad-ptr",
+          "tests/userprog/read-boundary",
+          "tests/userprog/read-zero",
+          "tests/userprog/read-stdout",
+          "tests/userprog/read-bad-fd",
+          "tests/userprog/write-normal",
+          "tests/userprog/write-bad-ptr",
+          "tests/userprog/write-boundary",
+          "tests/userprog/write-zero",
+          "tests/userprog/write-stdin",
+          "tests/userprog/write-bad-fd",
+          "tests/userprog/exec-once",
+          "tests/userprog/exec-arg",
+          "tests/userprog/exec-bound",
+          "tests/userprog/exec-bound-2",
+          "tests/userprog/exec-bound-3",
+          "tests/userprog/exec-multiple",
+          "tests/userprog/exec-missing",
+          "tests/userprog/exec-bad-ptr",
+          "tests/userprog/wait-simple",
+          "tests/userprog/wait-twice",
+          "tests/userprog/wait-killed",
+          "tests/userprog/wait-bad-pid",
+          "tests/userprog/multi-recurse",
+          "tests/userprog/multi-child-fd",
+          "tests/userprog/rox-simple",
+          "tests/userprog/rox-child",
+          "tests/userprog/rox-multichild",
+          "tests/userprog/bad-read",
+          "tests/userprog/bad-write",
+          "tests/userprog/bad-read2",
+          "tests/userprog/bad-write2",
+          "tests/userprog/bad-jump",
+          "tests/userprog/bad-jump2",
+          "tests/userprog/no-vm/multi-oom",
+          "tests/filesys/base/syn-write",
+          "tests/filesys/base/lg-create",
+          "tests/filesys/base/lg-full",
+          "tests/filesys/base/lg-random",
+          "tests/filesys/base/lg-seq-block",
+          "tests/filesys/base/lg-seq-random",
+          "tests/filesys/base/sm-create",
+          "tests/filesys/base/sm-full",
+          "tests/filesys/base/sm-random",
+          "tests/filesys/base/sm-seq-block",
+          "tests/filesys/base/sm-seq-random",
+          "tests/filesys/base/syn-read",
+          "tests/filesys/base/syn-remove",
+          "tests/filesys/base/syn-write",
+        ]
+    },
+    {
+      "id": "p3_test_name",
+      "type": "pickString",
+      "description": "Name of the P3 Test to Debug",
+      "options": [
+        "tests/userprog/args-single",
+        "tests/userprog/args-none",
+        "tests/userprog/args-multiple",
+        "tests/userprog/args-many",
+        "tests/userprog/args-dbl-space",
+        "tests/userprog/sc-bad-sp",
+        "tests/userprog/sc-bad-arg",
+        "tests/userprog/sc-boundary",
+        "tests/userprog/sc-boundary-2",
+        "tests/userprog/sc-boundary-3",
+        "tests/userprog/halt",
+        "tests/userprog/exit",
+        "tests/userprog/create-normal",
+        "tests/userprog/create-empty",
+        "tests/userprog/create-null",
+        "tests/userprog/create-bad-ptr",
+        "tests/userprog/create-long",
+        "tests/userprog/create-exists",
+        "tests/userprog/create-bound",
+        "tests/userprog/open-normal",
+        "tests/userprog/open-missing",
+        "tests/userprog/open-boundary",
+        "tests/userprog/open-empty",
+        "tests/userprog/open-null",
+        "tests/userprog/open-bad-ptr",
+        "tests/userprog/open-twice",
+        "tests/userprog/close-normal",
+        "tests/userprog/close-twice",
+        "tests/userprog/close-stdin",
+        "tests/userprog/close-stdout",
+        "tests/userprog/close-bad-fd",
+        "tests/userprog/read-normal",
+        "tests/userprog/read-bad-ptr",
+        "tests/userprog/read-boundary",
+        "tests/userprog/read-zero",
+        "tests/userprog/read-stdout",
+        "tests/userprog/read-bad-fd",
+        "tests/userprog/write-normal",
+        "tests/userprog/write-bad-ptr",
+        "tests/userprog/write-boundary",
+        "tests/userprog/write-zero",
+        "tests/userprog/write-stdin",
+        "tests/userprog/write-bad-fd",
+        "tests/userprog/exec-once",
+        "tests/userprog/exec-arg",
+        "tests/userprog/exec-bound",
+        "tests/userprog/exec-bound-2",
+        "tests/userprog/exec-bound-3",
+        "tests/userprog/exec-multiple",
+        "tests/userprog/exec-missing",
+        "tests/userprog/exec-bad-ptr",
+        "tests/userprog/wait-simple",
+        "tests/userprog/wait-twice",
+        "tests/userprog/wait-killed",
+        "tests/userprog/wait-bad-pid",
+        "tests/userprog/multi-recurse",
+        "tests/userprog/multi-child-fd",
+        "tests/userprog/rox-simple",
+        "tests/userprog/rox-child",
+        "tests/userprog/rox-multichild",
+        "tests/userprog/bad-read",
+        "tests/userprog/bad-write",
+        "tests/userprog/bad-read2",
+        "tests/userprog/bad-write2",
+        "tests/userprog/bad-jump",
+        "tests/userprog/bad-jump2",
+        "tests/vm/pt-grow-stack",
+        "tests/vm/pt-grow-pusha",
+        "tests/vm/pt-grow-bad",
+        "tests/vm/pt-big-stk-obj",
+        "tests/vm/pt-bad-addr",
+        "tests/vm/pt-bad-read",
+        "tests/vm/pt-write-code",
+        "tests/vm/pt-write-code2",
+        "tests/vm/pt-grow-stk-sc",
+        "tests/vm/page-linear",
+        "tests/vm/page-parallel",
+        "tests/vm/page-merge-seq",
+        "tests/vm/page-merge-par",
+        "tests/vm/page-merge-stk",
+        "tests/vm/page-shuffle",
+        "tests/filesys/base/lg-create",
+        "tests/filesys/base/lg-full",
+        "tests/filesys/base/lg-random",
+        "tests/filesys/base/lg-seq-block",
+        "tests/filesys/base/lg-seq-random",
+        "tests/filesys/base/sm-create",
+        "tests/filesys/base/sm-full",
+        "tests/filesys/base/sm-random",
+        "tests/filesys/base/sm-seq-block",
+        "tests/filesys/base/sm-seq-random",
+        "tests/filesys/base/syn-read",
+        "tests/filesys/base/syn-remove",
+        "tests/filesys/base/syn-write",
+      ]
+    },
+    {
+      "id": "p4_test_name",
+      "type": "pickString",
+      "description": "Name of the P4 Test to Debug",
+      "options": [
+        "tests/userprog/args-single",
+        "tests/userprog/args-none",
+        "tests/userprog/args-multiple",
+        "tests/userprog/args-many",
+        "tests/userprog/args-dbl-space",
+        "tests/userprog/sc-bad-sp",
+        "tests/userprog/sc-bad-arg",
+        "tests/userprog/sc-boundary",
+        "tests/userprog/sc-boundary-2",
+        "tests/userprog/sc-boundary-3",
+        "tests/userprog/halt",
+        "tests/userprog/exit",
+        "tests/userprog/create-normal",
+        "tests/userprog/create-empty",
+        "tests/userprog/create-null",
+        "tests/userprog/create-bad-ptr",
+        "tests/userprog/create-long",
+        "tests/userprog/create-exists",
+        "tests/userprog/create-bound",
+        "tests/userprog/open-normal",
+        "tests/userprog/open-missing",
+        "tests/userprog/open-boundary",
+        "tests/userprog/open-empty",
+        "tests/userprog/open-null",
+        "tests/userprog/open-bad-ptr",
+        "tests/userprog/open-twice",
+        "tests/userprog/close-normal",
+        "tests/userprog/close-twice",
+        "tests/userprog/close-stdin",
+        "tests/userprog/close-stdout",
+        "tests/userprog/close-bad-fd",
+        "tests/userprog/read-normal",
+        "tests/userprog/read-bad-ptr",
+        "tests/userprog/read-boundary",
+        "tests/userprog/read-zero",
+        "tests/userprog/read-stdout",
+        "tests/userprog/read-bad-fd",
+        "tests/userprog/write-normal",
+        "tests/userprog/write-bad-ptr",
+        "tests/userprog/write-boundary",
+        "tests/userprog/write-zero",
+        "tests/userprog/write-stdin",
+        "tests/userprog/write-bad-fd",
+        "tests/userprog/exec-once",
+        "tests/userprog/exec-arg",
+        "tests/userprog/exec-bound",
+        "tests/userprog/exec-bound-2",
+        "tests/userprog/exec-bound-3",
+        "tests/userprog/exec-multiple",
+        "tests/userprog/exec-missing",
+        "tests/userprog/exec-bad-ptr",
+        "tests/userprog/wait-simple",
+        "tests/userprog/wait-twice",
+        "tests/userprog/wait-killed",
+        "tests/userprog/wait-bad-pid",
+        "tests/userprog/multi-recurse",
+        "tests/userprog/multi-child-fd",
+        "tests/userprog/rox-simple",
+        "tests/userprog/rox-child",
+        "tests/userprog/rox-multichild",
+        "tests/userprog/bad-read",
+        "tests/userprog/bad-write",
+        "tests/userprog/bad-read2",
+        "tests/userprog/bad-write2",
+        "tests/userprog/bad-jump",
+        "tests/userprog/bad-jump2",
+        "tests/vm/pt-grow-stack",
+        "tests/vm/pt-grow-pusha",
+        "tests/vm/pt-grow-bad",
+        "tests/vm/pt-big-stk-obj",
+        "tests/vm/pt-bad-addr",
+        "tests/vm/pt-bad-read",
+        "tests/vm/pt-write-code",
+        "tests/vm/pt-write-code2",
+        "tests/vm/pt-grow-stk-sc",
+        "tests/vm/page-linear",
+        "tests/vm/page-parallel",
+        "tests/vm/page-merge-seq",
+        "tests/vm/page-merge-par",
+        "tests/vm/page-merge-stk",
+        "tests/vm/page-shuffle",
+        "tests/filesys/base/lg-full",
+        "tests/filesys/base/lg-random",
+        "tests/filesys/base/lg-seq-block",
+        "tests/filesys/base/lg-seq-random",
+        "tests/filesys/base/sm-create",
+        "tests/filesys/base/sm-full",
+        "tests/filesys/base/sm-random",
+        "tests/filesys/base/sm-seq-block",
+        "tests/filesys/base/sm-seq-random",
+        "tests/filesys/base/syn-read",
+        "tests/filesys/base/syn-remove",
+        "tests/filesys/base/syn-write",
+        "tests/filesys/extended/dir-empty-name",
+        "tests/filesys/extended/dir-mkdir",
+        "tests/filesys/extended/dir-mk-tree",
+        "tests/filesys/extended/dir-open",
+        "tests/filesys/extended/dir-over-file",
+        "tests/filesys/extended/dir-rm-cwd",
+        "tests/filesys/extended/dir-rmdir",
+        "tests/filesys/extended/dir-rm-parent",
+        "tests/filesys/extended/dir-rm-root",
+        "tests/filesys/extended/dir-rm-tree",
+        "tests/filesys/extended/dir-under-file",
+        "tests/filesys/extended/dir-vine",
+        "tests/filesys/extended/grow-create",
+        "tests/filesys/extended/grow-dir-lg",
+        "tests/filesys/extended/grow-file-size",
+        "tests/filesys/extended/grow-root-lg",
+        "tests/filesys/extended/grow-root-sm",
+        "tests/filesys/extended/grow-seq-lg",
+        "tests/filesys/extended/grow-seq-sm",
+        "tests/filesys/extended/grow-sparse",
+        "tests/filesys/extended/grow-tell",
+        "tests/filesys/extended/grow-two-files",
+        "tests/filesys/extended/mk-tree",
+        "tests/filesys/extended/syn-rw",
+      ]
+    },
+  ]
+}
